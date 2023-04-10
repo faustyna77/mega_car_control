@@ -1,0 +1,66 @@
+#include <Arduino.h>
+#define pin 5
+#define lewy41 41
+#define lewy45 45
+#define prawy49 49
+#define prawy51 51
+
+
+
+
+void setup() {
+Serial.begin(9600);
+ pinMode(5, OUTPUT); // ustawiamy pin 8 jako wyjście
+ pinMode(lewy41,OUTPUT);
+ pinMode(lewy45,OUTPUT);
+ pinMode(prawy49,OUTPUT);
+ pinMode(prawy51,OUTPUT);
+
+ }
+
+void loop() {
+
+ if(Serial.available()>0) //sprawdzamy czy są jakieś bity do odczytania jeśli są to przypisujemy je do zmiennej odczyt typu char.
+   {     
+      char odczyt= Serial.read(); //przypisanie do zmiennej odczyt odebranego znaku
+      switch(odczyt) //pętla switch 
+      {
+        case '1':
+         digitalWrite(lewy41, HIGH);
+         digitalWrite(lewy45,LOW);
+         digitalWrite(prawy49,HIGH);
+         digitalWrite(prawy51,LOW);
+
+
+         break; // kiedy wyślemy z telefonu 1, Arduino ustawi stan wysoki na pinie 8
+        case '2': 
+        digitalWrite(lewy41, LOW);
+         digitalWrite(lewy45,HIGH);
+         digitalWrite(prawy49,LOW);
+         digitalWrite(prawy51,HIGH);
+        break; 
+        case '3': 
+        digitalWrite(lewy41, HIGH);
+         digitalWrite(lewy45,LOW);
+         digitalWrite(prawy49,LOW);
+         digitalWrite(prawy51,HIGH);
+        break;
+        case '4': 
+        digitalWrite(lewy41, LOW);
+         digitalWrite(lewy45,HIGH);
+         digitalWrite(prawy49,HIGH);
+         digitalWrite(prawy51,LOW);
+        break;
+        case '5': 
+        digitalWrite(lewy41, LOW);
+         digitalWrite(lewy45,LOW);
+         digitalWrite(prawy49,LOW);
+         digitalWrite(prawy51,LOW);
+        break;// gdy wyślemy 2 Arduino ustawi stan niski na pinie 8
+       // gdy wyślemy 2 Arduino ustawi stan niski na pinie 13
+        default : break;
+      }
+      Serial.println(odczyt);
+   }
+   delay(50);
+}
